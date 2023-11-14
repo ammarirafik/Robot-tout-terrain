@@ -1,0 +1,112 @@
+const int motA_pin1 = 10;
+const int motA_pin2 = 11;     // motor left
+const int motB_pin1 = 12;
+const int motB_pin2 = 13;
+int command = 0; //variable to save data received from bluetooth
+
+
+void setup() {
+  Serial.begin(9600);
+  // set the pins in read or write mode
+  pinMode (motA_pin1, OUTPUT);
+  pinMode (motA_pin2, OUTPUT);
+  pinMode (motB_pin1, OUTPUT);
+  pinMode (motB_pin2, OUTPUT);
+
+
+  //--
+
+}
+
+// function
+void LEFT() {
+  digitalWrite(motA_pin1, HIGH);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, HIGH);
+  digitalWrite(motB_pin2, LOW);
+  Serial.println("LEFT");
+}
+
+void REV() {
+  digitalWrite(motA_pin1, HIGH);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, HIGH);
+}
+void FWD() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, HIGH);
+  digitalWrite(motB_pin1, HIGH);
+  digitalWrite(motB_pin2, LOW);
+  Serial.println("FWD");
+}
+void RIGHT() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, HIGH);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, HIGH);
+  Serial.println("RIGHT");
+}
+void DOWN_RIGHT() {
+  digitalWrite(motA_pin1, HIGH);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, LOW);
+
+  Serial.println("DOWN_RIGHT");
+}
+void UP_LEFT() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, HIGH);
+  digitalWrite(motB_pin2, LOW);
+
+  Serial.println("UP_LEFT");
+}
+void UP_RIGHT() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, HIGH);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, LOW);
+
+  Serial.println("UP_RIGHT");
+}
+void DOWN_LEFT() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, HIGH);
+
+  Serial.println("down_left");
+}
+void STOP() {
+  digitalWrite(motA_pin1, LOW);
+  digitalWrite(motA_pin2, LOW);
+  digitalWrite(motB_pin1, LOW);
+  digitalWrite(motB_pin2, LOW);
+  Serial.println("stop");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    command = Serial.read();
+  }
+  else if ( command == 70)
+    FWD();
+  else if ( command == 76)
+    LEFT();
+  else if ( command == 82)
+    RIGHT();
+  else if ( command == 66)
+    REV();
+  else if ( command == 71)
+    UP_LEFT();
+  else if ( command == 73)
+    UP_RIGHT();
+  else if ( command == 72)
+    DOWN_LEFT();
+  else if ( command == 74)
+    DOWN_RIGHT();
+  else
+    STOP();
+}
